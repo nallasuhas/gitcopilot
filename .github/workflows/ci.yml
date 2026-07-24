@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Configure git (needed by integration tests)
+        run: |
+          git config --global user.email "ci@example.com"
+          git config --global user.name "CI"
+          git config --global init.defaultBranch main
+
+      # The whole suite runs with the offline planner -- no Ollama, no network.
+      - name: Test
+        run: pytest -q
+
+      - name: Smoke test the CLI end-to-end (offline planner, scratch repo)
+        run: |
+          ./scripts/make_scratch_repo.sh
+          gitcopilot --offline --no-color --repo scratch-repo "show me the recent history"
+          gitcopilot --offline --no-color --explain --repo scratch-repo \
+            "undo my last commit but keep the changes"

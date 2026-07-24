@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+
+# Git Copilot runtime
+.gitcopilot/
+scratch-repo/
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/

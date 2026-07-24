@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gitcopilot"
+version = "0.1.0"
+description = "A safe, agentic git assistant: the observe->decide->act agent loop, specialized for git with a read-only/mutating/destructive permission model."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Suhas" }]
+keywords = ["git", "agent", "llm", "ollama","ai"]
+# Zero runtime dependencies: the Ollama client is stdlib urllib, output is
+# hand-rolled ANSI. Everything runs offline for demos and CI.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+gitcopilot = "gitcopilot.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["gitcopilot*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
