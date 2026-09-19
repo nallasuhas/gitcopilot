@@ -3,7 +3,7 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "gitcopilot"
+name = "gitguard"
 version = "0.1.0"
 description = "A safe, agentic git assistant: the observe->decide->act agent loop, specialized for git with a read-only/mutating/destructive permission model."
 readme = "README.md"
@@ -19,10 +19,10 @@ dependencies = []
 dev = ["pytest>=7"]
 
 [project.scripts]
-gitcopilot = "gitcopilot.cli:main"
+gitguard = "gitguard.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["gitcopilot*"]
+include = ["gitguard*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -5,12 +5,12 @@ read-only auto-runs, gated commands only run when the confirmer approves, the
 step budget halts runaway loops, and the preview reflects real repo state.
 """
 
-from gitcopilot.agent import Agent, AgentConfig, Decision, always_no, always_yes
-from gitcopilot.classifier import Tier
-from gitcopilot.gitcmd import GitRunner
-from gitcopilot.planner.base import Planner, Step, ToolCall
-from gitcopilot.preview import build_preview
-from gitcopilot.repostate import snapshot
+from gitguard.agent import Agent, AgentConfig, Decision, always_no, always_yes
+from gitguard.classifier import Tier
+from gitguard.gitcmd import GitRunner
+from gitguard.planner.base import Planner, Step, ToolCall
+from gitguard.preview import build_preview
+from gitguard.repostate import snapshot
 
 
 class ScriptedPlanner:
@@ -100,7 +100,7 @@ def test_denial_is_fed_back_so_planner_can_pivot(runner):
 
 
 def test_full_offline_flow_on_real_repo(runner):
-    from gitcopilot.planner.offline import OfflinePlanner
+    from gitguard.planner.offline import OfflinePlanner
     agent = Agent(OfflinePlanner(), runner, always_yes, AgentConfig(max_steps=6))
     result = agent.run("what changed in my working tree?")
     executed = [s for s in result.steps if s.executed]

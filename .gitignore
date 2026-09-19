@@ -7,8 +7,8 @@ build/
 dist/
 .pytest_cache/
 
-# Git Copilot runtime
-.gitcopilot/
+# GitGuard runtime
+.gitguard/
 scratch-repo/
 
 # Editor / OS

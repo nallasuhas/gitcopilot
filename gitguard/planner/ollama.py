@@ -24,7 +24,7 @@ import urllib.request
 from .base import TOOL_SCHEMA, Planner, PlannerError, Step, ToolCall
 from ..repostate import RepoState
 
-_SYSTEM = """You are Git Copilot, a careful Git planning agent.
+_SYSTEM = """You are GitGuard, a careful Git planning agent.
 
 Your job is to achieve the user's Git goal by proposing EXACTLY ONE Git
 command at a time, observing its result, and then deciding the next action.
@@ -136,7 +136,7 @@ class OllamaPlanner:
     name = "ollama"
 
     def __init__(self, model: str | None = None, host: str | None = None, timeout: float = 120.0):
-        self.model = model or os.environ.get("GITCOPILOT_MODEL", "llama3.2")
+        self.model = model or os.environ.get("GITGUARD_MODEL", "llama3.2")
         self.host = (host or os.environ.get("OLLAMA_HOST", "http://localhost:11434")).rstrip("/")
         self.timeout = timeout
 

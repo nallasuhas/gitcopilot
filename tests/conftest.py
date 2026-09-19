@@ -9,7 +9,7 @@ import subprocess
 
 import pytest
 
-from gitcopilot.gitcmd import GitRunner
+from gitguard.gitcmd import GitRunner
 
 
 def _git(cwd, *args):

@@ -1,4 +1,4 @@
-"""Git Copilot -- a safe, agentic git assistant.
+"""GitGuard -- a safe, agentic git assistant.
 
 The observe->decide->act loop of an AI coding agent, specialized for git and
 wrapped in a permission model that classifies every command as read-only,

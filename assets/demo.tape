@@ -1,4 +1,4 @@
-# VHS tape for the Git Copilot README demo.
+# VHS tape for the GitGuard README demo.
 #   regenerate:  vhs assets/demo.tape   (from the repo root)
 #
 # Uses the offline planner, so the output is deterministic and needs no Ollama.
@@ -26,7 +26,7 @@ Sleep 2s
 Show
 
 # --- Scene 1: read-only goal -> auto-runs, no prompt -------------------------
-Type "gitcopilot --offline --repo scratch-repo "what changed in my working tree'"
+Type "gitguard --offline --repo scratch-repo "what changed in my working tree'"
 Sleep 500ms 
 Enter
 Sleep 4s
@@ -36,7 +36,7 @@ Enter
 Sleep 500ms
 
 # --- Scene 2: destructive goal -> classify + preview + confirm ---------------
-Type "gitcopilot --offline --repo scratch-repo 'undo the last commit and discard the changes'"
+Type "gitguard --offline --repo scratch-repo 'undo the last commit and discard the changes'"
 Sleep 500ms
 Enter
 Sleep 4s

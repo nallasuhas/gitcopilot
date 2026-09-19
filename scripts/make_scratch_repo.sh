@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build a throwaway git repo so you can watch Git Copilot drive git without
+# Build a throwaway git repo so you can watch GitGuard drive git without
 # touching any real work. Safe to delete and re-run any time.
 #
 #   ./scripts/make_scratch_repo.sh [dir]   # default: ./scratch-repo
@@ -12,7 +12,7 @@ cd "$DIR"
 
 git init -q
 git config user.email "copilot@example.com"
-git config user.name "Git Copilot Demo"
+git config user.name "GitGuard Demo"
 # Deterministic commit timestamps so demos/tests are reproducible.
 export GIT_AUTHOR_DATE="2026-01-01T00:00:00"
 export GIT_COMMITTER_DATE="2026-01-01T00:00:00"
@@ -37,4 +37,4 @@ printf 'debug=true\n' > notes.local
 git branch old-experiment >/dev/null 2>&1 || true
 
 echo "scratch repo ready at: $(pwd)"
-echo "  try:  gitcopilot --offline --repo $DIR \"what changed in my working tree?\""
+echo "  try:  gitguard --offline --repo $DIR \"what changed in my working tree?\""

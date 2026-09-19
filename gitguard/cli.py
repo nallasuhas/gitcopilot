@@ -1,20 +1,20 @@
-"""Git Copilot command-line interface.
+"""GitGuard command-line interface.
 
 Usage:
-    gitcopilot "undo my last commit but keep the changes"
-    gitcopilot --offline "show me recent history"
-    gitcopilot --explain "delete branch old-feature"   # explain, don't run
-    gitcopilot --yes "stage everything"                 # auto-confirm (scratch!)
-    gitcopilot replay                                   # re-print the transcript
+    gitguard "undo my last commit but keep the changes"
+    gitguard --offline "show me recent history"
+    gitguard --explain "delete branch old-feature"   # explain, don't run
+    gitguard --yes "stage everything"                 # auto-confirm (scratch!)
+    gitguard replay                                   # re-print the transcript
 
 Flags:
     --offline        use the deterministic planner (no Ollama, no network)
-    --model NAME     Ollama model (default: env GITCOPILOT_MODEL or llama3.2)
+    --model NAME     Ollama model (default: env GITGUARD_MODEL or llama3.2)
     --repo PATH      run git in PATH (default: current directory)
     --explain        learning mode: propose + explain every command, run nothing
     --yes            auto-approve mutating/destructive commands (danger; scratch)
     --max-steps N    step budget before the loop halts (default 12)
-    --transcript F   append a JSON-lines transcript to F (default .gitcopilot/log.jsonl)
+    --transcript F   append a JSON-lines transcript to F (default .gitguard/log.jsonl)
     --no-color       disable ANSI color
 """
 
@@ -202,7 +202,7 @@ def _replay(transcript: Transcript) -> int:
 # --- entrypoint --------------------------------------------------------------
 
 def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(prog="gitcopilot", description="A safe, agentic git assistant.")
+    p = argparse.ArgumentParser(prog="gitguard", description="A safe, agentic git assistant.")
     p.add_argument("goal", nargs="*", help="natural-language git goal, or 'replay'")
     p.add_argument("--offline", action="store_true", help="use the model-free deterministic planner")
     p.add_argument("--model", default=None, help="Ollama model name")
@@ -210,7 +210,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--explain", action="store_true", help="explain each command, run nothing")
     p.add_argument("--yes", action="store_true", help="auto-approve gated commands (scratch repos only!)")
     p.add_argument("--max-steps", type=int, default=12)
-    p.add_argument("--transcript", default=".gitcopilot/log.jsonl")
+    p.add_argument("--transcript", default=".gitguard/log.jsonl")
     p.add_argument("--no-color", action="store_true")
     args = p.parse_args(argv)
 
@@ -241,7 +241,7 @@ def main(argv: list[str] | None = None) -> int:
     printer = ExplainPrinter() if args.explain else Printer()
     confirm: Confirmer = always_yes if args.yes else interactive_confirmer(runner)
 
-    print(C.bold("Git Copilot") + C.dim(f"  |  planner={planner_name}  |  repo={runner.cwd}"))
+    print(C.bold("GitGuard") + C.dim(f"  |  planner={planner_name}  |  repo={runner.cwd}"))
     print(C.dim(f"goal: {goal}"))
     if args.yes:
         print(C.red("! --yes: gated commands will run WITHOUT confirmation."))

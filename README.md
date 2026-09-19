@@ -1,12 +1,12 @@
-# Git Copilot — a safe, agentic git assistant
+# GitGuard — a safe, agentic git assistant
 
 You type a goal in plain English. A local LLM proposes **one git command at a
-time**, Git Copilot classifies it, runs the harmless ones freely, and **stops to
+time**, GitGuard classifies it, runs the harmless ones freely, and **stops to
 show you the blast radius before anything destructive** — then reads the output
 and continues. It's the same observe-decide-act loop an AI coding agent runs,
 specialized for the command surface engineers fear most: **git**.
 
-![Git Copilot demo — a read-only goal auto-runs, then a destructive goal stops and previews exactly which commit and which uncommitted changes are at risk before asking to confirm](assets/demo.gif)
+![GitGuard demo — a read-only goal auto-runs, then a destructive goal stops and previews exactly which commit and which uncommitted changes are at risk before asking to confirm](assets/demo.gif)
 
 <sub>Read-only goals auto-run; a `reset --hard` stops and previews the blast radius before touching anything. (Recorded with the offline planner — no model required; regenerate via `vhs assets/demo.tape`.)</sub>
 
@@ -20,7 +20,7 @@ command eat your work without a human seeing exactly what it would do*.
 ## The safety model
 
 Every command the agent proposes is sorted into one of three tiers by a
-**flag-aware classifier** (`gitcopilot/classifier.py`). The tier decides the gate:
+**flag-aware classifier** (`gitguard/classifier.py`). The tier decides the gate:
 
 | Tier | Examples | Gate |
 |------|----------|------|
@@ -54,7 +54,7 @@ Three principles keep it honest:
 ### Plan-then-apply previews
 
 For destructive commands a yes/no isn't enough — you need the blast radius
-(`gitcopilot/preview.py`):
+(`gitguard/preview.py`):
 
 - `reset --hard <ref>` -> which commits get dropped **and** which uncommitted
   edits are lost
@@ -65,7 +65,7 @@ For destructive commands a yes/no isn't enough — you need the blast radius
 
 ### Repo-state guard
 
-Before every step Git Copilot snapshots the repo (`gitcopilot/repostate.py`) so
+Before every step GitGuard snapshots the repo (`gitguard/repostate.py`) so
 you never act on a surprise state — **detached HEAD**, **unmerged paths**
 mid-rebase, **ahead/behind** an upstream, or a **dirty** working tree are all
 surfaced (and warned about) on each turn.
@@ -73,7 +73,7 @@ surfaced (and warned about) on each turn.
 ### Command validation
 
 Before a proposed command reaches the classifier, it passes through a
-**validator** (`gitcopilot/validator.py`) that checks it against the actual
+**validator** (`gitguard/validator.py`) that checks it against the actual
 repository state using read-only git queries:
 
 - **Subcommand existence** — is `argv[0]` a real git subcommand? (via `git help -a`)
@@ -103,31 +103,31 @@ pytest -q
 python scripts\make_scratch_repo.py
 
 :: End-to-end demo on the scratch repo, no model required:
-gitcopilot --offline --repo scratch-repo "show me the recent history"
-gitcopilot --offline --repo scratch-repo "what changed in my working tree?"
-gitcopilot --offline --explain --repo scratch-repo "delete branch old-experiment"
+gitguard --offline --repo scratch-repo "show me the recent history"
+gitguard --offline --repo scratch-repo "what changed in my working tree?"
+gitguard --offline --explain --repo scratch-repo "delete branch old-experiment"
 ```
 
 To use the real LLM planner (a local [Ollama](https://ollama.com) daemon):
 
 ```cmd
 ollama pull llama3.2
-gitcopilot "squash my last three commits into one"
+gitguard "squash my last three commits into one"
 ```
 
 ### CLI
 
 ```
-gitcopilot [flags] "<natural-language goal>"
-gitcopilot replay                  # re-print the transcript of past sessions
+gitguard [flags] "<natural-language goal>"
+gitguard replay                  # re-print the transcript of past sessions
 
 --offline        deterministic planner — no Ollama, no network (demos & CI)
---model NAME     Ollama model (default: $GITCOPILOT_MODEL or llama3.2)
+--model NAME     Ollama model (default: $GITGUARD_MODEL or llama3.2)
 --repo PATH      run git in PATH (default: current directory)
 --explain        learning mode: propose + classify every command, run nothing
 --yes            auto-approve gated commands (scratch repos only!)
 --max-steps N    step budget before the loop halts (default 12)
---transcript F   JSON-lines log (default .gitcopilot/log.jsonl)
+--transcript F   JSON-lines log (default .gitguard/log.jsonl)
 --no-color       disable ANSI color
 ```
 

@@ -32,9 +32,9 @@ jobs:
       - name: Test
         run: pytest -q
 
-      - name: Smoke test the CLI end-to-end (offline planner, scratch repo)
+            - name: Smoke test the CLI end-to-end (offline planner, scratch repo)
         run: |
           ./scripts/make_scratch_repo.sh
-          gitcopilot --offline --no-color --repo scratch-repo "show me the recent history"
-          gitcopilot --offline --no-color --explain --repo scratch-repo \
+          gitguard --offline --no-color --repo scratch-repo "show me the recent history"
+          gitguard --offline --no-color --explain --repo scratch-repo \
             "undo my last commit but keep the changes"

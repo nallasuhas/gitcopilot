@@ -7,7 +7,7 @@ unrecognized or dangerous fails safe (escalates), never de-escalates.
 
 import pytest
 
-from gitcopilot.classifier import Tier, classify
+from gitguard.classifier import Tier, classify
 
 
 @pytest.mark.parametrize("cmd", [

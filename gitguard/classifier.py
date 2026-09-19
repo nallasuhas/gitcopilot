@@ -1,6 +1,6 @@
 """Git command permission classifier.
 
-This is the heart of Git Copilot's safety model. Every git command the agent
+This is the heart of GitGuard's safety model. Every git command the agent
 wants to run is classified into one of three tiers:
 
     READ_ONLY   -- observes the repo, changes nothing. Auto-run, no prompt.

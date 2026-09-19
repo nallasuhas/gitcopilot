@@ -1,7 +1,7 @@
 """Repo-state guard tests against real repos."""
 
-from gitcopilot.gitcmd import GitRunner
-from gitcopilot.repostate import snapshot
+from gitguard.gitcmd import GitRunner
+from gitguard.repostate import snapshot
 
 
 def test_dirty_repo_state(runner):

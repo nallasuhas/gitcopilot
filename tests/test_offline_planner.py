@@ -1,7 +1,7 @@
 """The deterministic planner maps intents to command sequences."""
 
-from gitcopilot.planner.offline import OfflinePlanner
-from gitcopilot.planner.base import Step, ToolCall
+from gitguard.planner.offline import OfflinePlanner
+from gitguard.planner.base import Step, ToolCall
 
 
 def first_call(goal):
