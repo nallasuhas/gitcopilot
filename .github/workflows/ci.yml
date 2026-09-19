@@ -32,7 +32,7 @@ jobs:
       - name: Test
         run: pytest -q
 
-            - name: Smoke test the CLI end-to-end (offline planner, scratch repo)
+      - name: Smoke test the CLI end-to-end (offline planner, scratch repo)
         run: |
           ./scripts/make_scratch_repo.sh
           gitguard --offline --no-color --repo scratch-repo "show me the recent history"
